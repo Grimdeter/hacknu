@@ -18,6 +18,7 @@ class Main extends React.Component {
     super(props);
     this.state = {
       name: "",
+      coins: 0,
     };
   }
 
@@ -33,17 +34,27 @@ class Main extends React.Component {
   }
 
   render() {
-    const { name } = this.state;
+    const { name, coins } = this.state;
     return (
-      <IonApp>
-        <IonContent>
+      <IonContent>
+        <div className="main">
+          <h1>Woodsman</h1>
           {name ? <p>Привет, {name}</p> : null}
-          <IonButton expand="block">Играть</IonButton>
           <Link to="/leaders">
-            <IonButton>Список лидеров</IonButton>
+            <IonButton color="success">Список лидеров</IonButton>
           </Link>
-        </IonContent>
-      </IonApp>
+          <IonButton expand="block" color="success" id="play">
+            Играть
+          </IonButton>
+          <div id="bonus">
+            <p>
+              У вас накопилось {coins} монет. Перевести в кошелек AituPay в
+              качестве бонусов?
+            </p>
+            <IonButton color="success">Перевести!</IonButton>
+          </div>
+        </div>
+      </IonContent>
     );
   }
 }
