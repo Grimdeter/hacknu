@@ -43,9 +43,11 @@ class Main extends React.Component {
           <Link to="/leaders">
             <IonButton color="success">Список лидеров</IonButton>
           </Link>
-          <IonButton expand="block" color="success" id="play">
-            Играть
-          </IonButton>
+          <Link to="/game">
+            <IonButton expand="block" color="success" id="play">
+              Играть
+            </IonButton>
+          </Link>
           <div id="bonus">
             <p>
               У вас накопилось {coins} монет. Перевести в кошелек AituPay в
