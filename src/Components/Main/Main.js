@@ -1,7 +1,8 @@
 import React from "react";
 import aituBridge from "@btsd/aitu-bridge";
-import { IonApp, IonContent } from "@ionic/react";
-
+import { IonApp, IonContent, IonButton } from "@ionic/react";
+import { Link } from "react-router-dom";
+import "./Main.css";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -35,7 +36,13 @@ class Main extends React.Component {
     const { name } = this.state;
     return (
       <IonApp>
-        <IonContent>{name ? <p>Hello, {name}</p> : null}</IonContent>
+        <IonContent>
+          {name ? <p>Привет, {name}</p> : null}
+          <IonButton expand="block">Играть</IonButton>
+          <Link to="/leaders">
+            <IonButton>Список лидеров</IonButton>
+          </Link>
+        </IonContent>
       </IonApp>
     );
   }
