@@ -1,6 +1,6 @@
-import Main from "./Components/Main/Main";
+import Game from "./Components/game";
 const App = () => {
-  return <Main />;
+  return <Game />;
 };
 
 export default App;
