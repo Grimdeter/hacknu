@@ -40,7 +40,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "game": "webpack serve",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
