@@ -1,0 +1,23 @@
+.main {
+  text-align: center;
+  font-family: 'Comfortaa', cursive;
+}
+@import url("https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap");
+.main h1 {
+  font-size: 72px !important;
+  color: rgb(119, 101, 101);
+  font-family: "Syne Mono";
+}
+.main p {
+  font-size: 20px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+.main #bonus {
+    position: absolute;
+    top: 40%;
+}
+.main #play {
+    position: absolute;
+    top: 90%;
+    width: 100%;
+}
