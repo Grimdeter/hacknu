@@ -24,6 +24,9 @@ export default class titleScreen extends Phaser.Scene {
     this.load.image("pc5", "gameAssets/pc5.png");
     this.load.image("branch", "gameAssets/branch.png");
     this.load.image("tree", "gameAssets/tree.png");
+    this.load.image("ground", "gameAssets/ground.png");
+    this.load.image("ground2", "gameAssets/ground2.png");
+    this.load.image("sky", "gameAssets/sky.png");
   }
 
   create() {

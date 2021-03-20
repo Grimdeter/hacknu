@@ -10,13 +10,14 @@ export default class mainScene extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.sky = this.add.tileSprite(0,0,800, 1250, 'sky')
     this.sound.play("music", { repeat: true, volume: 0.05 });
 
     this.score = 0
     window.myScene = this;
     this.obstArray = []
 
-    this.pc = this.add.sprite(150, 500, 'pc0').setOrigin(0.5, 0.5).setScale(3,3)
+    this.pc = this.add.sprite(150, 550, 'pc0').setOrigin(0.5, 0.5).setScale(3,3)
     this.physics.world.enable(this.pc);
 
     this.pc.body.setSize(30, 15, true);
@@ -42,6 +43,10 @@ export default class mainScene extends Phaser.Scene {
       console.log(`aaaaaaaaaaaaaaa`)
       this.flipToLeft()
       this.addObst()
+      this.updateScore()
+      this.obstArray.forEach(element => {
+        element.y += 100;
+      })
     })
 
     this.zoneGraphics.strokeRect(this.leftZone.x, this.leftZone.y, this.leftZone.width, this.leftZone.height)
@@ -54,6 +59,10 @@ export default class mainScene extends Phaser.Scene {
       console.log(`bbbbbbbbbbb`)
       this.addObst()
       this.flipToRight()
+      this.updateScore()
+      this.obstArray.forEach(element => {
+        element.y += 100;
+      })
     })
 
     this.obstSideLeft = 0;
@@ -70,10 +79,10 @@ export default class mainScene extends Phaser.Scene {
 
     this.input.on('pointerdown', () => 
     {
-      this.updateScore()
-      this.obstArray.forEach(element => {
-        element.y += 120;
-      })
+      // this.updateScore()
+      // this.obstArray.forEach(element => {
+      //   element.y += 120;
+      // })
     })
     this.addInterface()
     
@@ -106,6 +115,8 @@ export default class mainScene extends Phaser.Scene {
       showOnStart: false,
       hideOnComplete: false
   })
+    this.ground = this.add.tileSprite(0, 640, 5000, 40, 'ground')
+    this.ground2 = this.add.tileSprite(0, 680, 5000, 40, 'ground2')
   }
 
   addInterface() {
@@ -223,14 +234,14 @@ export default class mainScene extends Phaser.Scene {
   flipToRight() {
     this.pc.play('cut')
     this.pc.setX(250)
-    this.pc.setY(500)
+    this.pc.setY(550)
     this.pc.setFlipX(true)
   }
 
   flipToLeft() {
     this.pc.play('cut')
     this.pc.setX(150)
-    this.pc.setY(500)
+    this.pc.setY(550)
     this.pc.setFlipX(false)
   }
 
@@ -249,39 +260,12 @@ export default class mainScene extends Phaser.Scene {
           from: 1,
           to: 0
         },
-        y: 800,
         ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
         duration: this.dieTweenTime,
         repeat: 0, // -1: infinity
         yoyo: false
       });
 
-      this.obstArray.forEach(element => {
-        this.obstDieTween = this.tweens.add({
-          targets: element,
-          y: 0,
-          ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
-          duration: this.dieTweenTime,
-          repeat: 0, // -1: infinity
-          yoyo: false
-        });
-      });
-
-      this.obstArray.forEach(element => {
-        element.body.velocity.y = 0;
-        element.body.velocity.x = 0;
-      });
-
-      this.pc.body.setVelocity(0, 0);
-      this.pc.body.setAllowGravity(false);
-
-      // clearInterval(this.obstInterval)
-      this.obstAllowAdd = false;
-
-      localStorage.setItem(`bestScore`, Math.max(this.score, this.topScore));
-      // console.log(`hi from die`)
-
-      // setTimeout(() => { this.scene.start('gameOverScreen', {score: this.score, topScore:this.topScore}) }, 500)
       setTimeout(() => {
         this.scene.start("wheelScene", {
           score: this.score,
