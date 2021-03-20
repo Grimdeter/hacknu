@@ -23,13 +23,11 @@ export default class pauseScreen extends Phaser.Scene {
       fill: "#ffffff",
       align: "center"
     };
-
-    this.background = this.add.tileSprite(225, 72, 450, 1500, `bg`);
-    this.sky = this.add.tileSprite(0,0,800, 1250, 'sky')
-    this.ground = this.add.tileSprite(0, 640, 5000, 40, 'ground')
-    this.ground2 = this.add.tileSprite(0, 680, 5000, 40, 'ground2')
+    this.sky = this.add.tileSprite(0,0,8000, 2250, 'sky')
     this.pc = this.add.sprite(this.pcData.x, this.pcData.y, 'pc0').setOrigin(0.5, 0.5).setScale(3,3).setFlipX(this.pcData.flipX)
-    this.tree = this.add.tileSprite(200, 400, 100, 800, 'tree');
+    this.ground = this.add.tileSprite(0, window.screen.height - 60, 5000, 40, 'ground')
+    this.ground2 = this.add.tileSprite(0, window.screen.height - 20, 5000, 40, 'ground2')
+    this.tree = this.add.tileSprite(window.screen.width/2, 0, 100, window.screen.height*4, 'tree')
     this.obstArray = [];
 
     this.groupObst = this.physics.add.group({

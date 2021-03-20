@@ -10,28 +10,27 @@ export default class mainScene extends Phaser.Scene {
   preload() {}
 
   create() {
-    this.scale.setZoom(0.6)
+    this.scale.setZoom(0.9)
 
-    this.fallSpeed = 50
-    this.obstHeight = 50
+    this.fallSpeed = window.screen.height/14 + 5
+    this.obstHeight = window.screen.height/14
     console.log(`main!`)
-    this.sky = this.add.tileSprite(0,0,800, 1250, 'sky')
+    this.sky = this.add.tileSprite(0,0,8000, 2250, 'sky')
     // this.sound.play("music", { repeat: true, volume: 0.05 });
 
     this.score = 0
     window.myScene = this;
     this.obstArray = []
 
-    this.pc = this.add.sprite(150, 550, 'pc0').setOrigin(0.5, 0.5).setScale(3,3)
-    this.ground = this.add.tileSprite(0, 640, 5000, 40, 'ground')
-    this.ground2 = this.add.tileSprite(0, 680, 5000, 40, 'ground2')
-    // this.ground2 = this.add.tileSprite(0, window.screen.height - 20, 5000, 40, 'ground2')
+    this.pc = this.add.sprite(window.screen.width/2 - 50, window.screen.height - 150, 'pc0').setOrigin(0.5, 0.5).setScale(3,3)
+    this.ground = this.add.tileSprite(0, window.screen.height - 60, 5000, 40, 'ground')
+    this.ground2 = this.add.tileSprite(0, window.screen.height - 20, 5000, 40, 'ground2')
 
     this.physics.world.enable(this.pc);
 
     this.pc.body.setSize(30, 15, true);
 
-    this.tree = this.add.tileSprite(window.screen.width/2, 400, 100, window.screen.height, 'tree')
+    this.tree = this.add.tileSprite(window.screen.width/2, 0, 100, window.screen.height*4, 'tree')
 
     this.groupBranch = this.physics.add.group({
       defaultKey: "branch",
@@ -45,7 +44,7 @@ export default class mainScene extends Phaser.Scene {
     this.rightExecuted = false
     this.zoneGraphics = this.add.graphics()
     this.zoneGraphics.lineStyle(4, 0x555555)
-    this.leftZone = this.add.zone(0, 0, 400, 1800).setInteractive()
+    this.leftZone = this.add.zone(0, 0, window.screen.width, window.screen.height*4).setInteractive()
     this.leftZone.on('pointerup', () => {
       if (this.leftExecuted === false)
       {
@@ -70,7 +69,7 @@ export default class mainScene extends Phaser.Scene {
     this.zoneGraphics.lineStyle(4, 0xff0000)
     this.zoneGraphics.strokeRect(200, 0, 200, 700)
 
-    this.rightZone = this.add.zone(400, 0, 400, 1800).setInteractive()
+    this.rightZone = this.add.zone(window.screen.width, 0, window.screen.width, window.screen.height*4).setInteractive()
     this.rightZone.on('pointerup', () => {
       if (this.rightExecuted === false)
       {
@@ -137,30 +136,30 @@ export default class mainScene extends Phaser.Scene {
   }
 
   addInterface() {
-    this.sndoffbtn = this.add
-      .image(85, 45, `soundOn`)
-      .setInteractive()
-      .setOrigin(0.5, 0.5);
+    // this.sndoffbtn = this.add
+    //   .image(85, 45, `soundOn`)
+    //   .setInteractive()
+    //   .setOrigin(0.5, 0.5);
 
-    this.sndoffbtn.on(`pointerdown`, () => {
-      // this.physics.world.gravity.x = -this.physics.world.gravity.x;
-      this.sound.stopAll();
-      this.allowClick = false;
-      this.sndoffbtn.destroy()
-      this.sndoffbtn = this.add
-      .image(85, 45, `soundOff`)
-      .setOrigin(0.5, 0.5);
-    });
+    // this.sndoffbtn.on(`pointerdown`, () => {
+    //   // this.physics.world.gravity.x = -this.physics.world.gravity.x;
+    //   this.sound.stopAll();
+    //   this.allowClick = false;
+    //   this.sndoffbtn.destroy()
+    //   this.sndoffbtn = this.add
+    //   .image(85, 45, `soundOff`)
+    //   .setOrigin(0.5, 0.5);
+    // });
 
     this.scoreText = this.add
-      .text(225, 40, "", this.labelStyle)
+      .text(window.screen.width/2, 40, "", this.labelStyle)
       .setOrigin(0.5, 0.5)
       .setFontFamily("Roboto")
       .setFontStyle("bold italic")
       .setPadding({ right: 16 });
 
     this.pauseBtn = this.add
-      .image(360, 45, `pause`)
+      .image(window.screen.width - 40, 45, `pause`)
       .setInteractive()
       .setOrigin(0.5, 0.5)
 
@@ -185,14 +184,14 @@ export default class mainScene extends Phaser.Scene {
         if (this.obstSideLeft === 3) {
           this.obstArray.push(
             this.groupBranch
-              .create(275, this.obstHeight)
+              .create(window.screen.width/2+75, this.obstHeight)
               // .setSize(80, 50, true)
           ); // right
           // this.obstArray.push(this.groupBranch.create(375, 80).setScale(0.07, 0.07).setRotation(-1.57).setSize(800,800,true)) // right
         } else {
           this.obstArray.push(
             this.groupBranch
-              .create(145, this.obstHeight)
+              .create(window.screen.width/2-75, this.obstHeight)
               // .setSize(15, 15, true)
               // .setSize(80, 50, true)
           ); // left
@@ -204,7 +203,7 @@ export default class mainScene extends Phaser.Scene {
         if (this.obstSideRight === 3) {
           this.obstArray.push(
             this.groupBranch
-              .create(145, this.obstHeight)
+              .create(window.screen.width/2-75, this.obstHeight)
               // .setSize(15, 15, true)
               // .setSize(80, 50, true)
           ); // left
@@ -213,7 +212,7 @@ export default class mainScene extends Phaser.Scene {
         } else {
           this.obstArray.push(
             this.groupBranch
-              .create(275, this.obstHeight)
+              .create(window.screen.width/2+75, this.obstHeight)
               // .setSize(80, 50, true)
           ); // right
           // this.obstArray.push(this.groupBranch.create(375, 80).setScale(0.07, 0.07).setRotation(-1.57).setSize(800,800,true)) // right
@@ -248,15 +247,13 @@ export default class mainScene extends Phaser.Scene {
 
   flipToRight() {
     this.pc.play('cut')
-    this.pc.setX(250)
-    this.pc.setY(550)
+    this.pc.setX(window.screen.width/2 + 50)
     this.pc.setFlipX(true)
   }
 
   flipToLeft() {
     this.pc.play('cut')
-    this.pc.setX(150)
-    this.pc.setY(550)
+    this.pc.setX(window.screen.width/2 - 50)
     this.pc.setFlipX(false)
   }
 
