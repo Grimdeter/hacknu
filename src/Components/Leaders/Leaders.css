@@ -1,3 +1,7 @@
 .leaders {
     text-align: center;
 }
+.leaders #list {
+    text-align: left;
+    margin-left: 20px;
+}
