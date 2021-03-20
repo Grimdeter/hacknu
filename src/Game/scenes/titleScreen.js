@@ -6,6 +6,10 @@ export default class titleScreen extends Phaser.Scene {
       key: "titleScreen"
     });
   }
+  inti()
+  {
+    this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+  }
 
   preload() {
     this.load.image(`bg`, 'gameAssets/bgMonochrome.png');

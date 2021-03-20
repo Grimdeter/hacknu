@@ -10,6 +10,8 @@ export default class mainScene extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.scale.setZoom(0.6)
+
     this.fallSpeed = 50
     this.obstHeight = 50
     console.log(`main!`)
@@ -21,11 +23,15 @@ export default class mainScene extends Phaser.Scene {
     this.obstArray = []
 
     this.pc = this.add.sprite(150, 550, 'pc0').setOrigin(0.5, 0.5).setScale(3,3)
+    this.ground = this.add.tileSprite(0, 640, 5000, 40, 'ground')
+    this.ground2 = this.add.tileSprite(0, 680, 5000, 40, 'ground2')
+    // this.ground2 = this.add.tileSprite(0, window.screen.height - 20, 5000, 40, 'ground2')
+
     this.physics.world.enable(this.pc);
 
     this.pc.body.setSize(30, 15, true);
 
-    this.tree = this.add.tileSprite(200, 400, 100, 800, 'tree')
+    this.tree = this.add.tileSprite(window.screen.width/2, 400, 100, window.screen.height, 'tree')
 
     this.groupBranch = this.physics.add.group({
       defaultKey: "branch",
@@ -128,8 +134,6 @@ export default class mainScene extends Phaser.Scene {
       hideOnComplete: false
     })
 
-    this.ground = this.add.tileSprite(0, 640, 5000, 40, 'ground')
-    this.ground2 = this.add.tileSprite(0, 680, 5000, 40, 'ground2')
   }
 
   addInterface() {

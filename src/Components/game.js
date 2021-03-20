@@ -8,8 +8,8 @@ import wheelScene2 from "../Game/scenes/wheelScene2";
 const config = {
   type: Phaser.AUTO,
   parent: "phaser",
-  // width: 400,
-  // height: 700,
+	width: window.screen.width,
+	height: window.screen.height,
   physics: {
     default: "arcade",
     arcade: {
