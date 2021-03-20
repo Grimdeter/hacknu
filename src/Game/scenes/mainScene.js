@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import aituBridge from "@btsd/aitu-bridge";
 
 export default class mainScene extends Phaser.Scene {
   constructor() {
@@ -10,6 +11,8 @@ export default class mainScene extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.getPhone()
+
     this.scale.setZoom(0.9)
 
     this.fallSpeed = window.screen.height/14 + 5
@@ -289,6 +292,12 @@ export default class mainScene extends Phaser.Scene {
     this.firstClickTime = 0;
   }
 
+  async getPhone() {
+    try {
+      this.dataPhone = await aituBridge.getPhone();
+    } catch (error) {}
+  }
+
   update() {
     // this.leftExecuted = false
     // this.rightExecuted = false
@@ -315,6 +324,7 @@ export default class mainScene extends Phaser.Scene {
       setTimeout(() => {
         this.scene.start("wheelScene", {
           score: this.score,
+          phone: this.dataPhone
         });
       }, this.dieTweenTime);
     }
