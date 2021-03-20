@@ -1,7 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 .leaders {
     text-align: center;
+    font-family: 'Comfortaa';
 }
 .leaders #list {
     text-align: left;
-    margin-left: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+}
+.leaders #num {
+    font-size: larger;
+    color: grey;
+    margin-right: 20px;
+    font-weight: bold;
+}
+.leaders img {
+    position: relative;
+    top: 5px;
+}
+.leaders #name {
+    margin-top: 4px;
+}
+.leaders h1 {
+    font-weight: bold;
 }

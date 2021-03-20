@@ -2,6 +2,7 @@ import React from "react";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 import "./Leaders.css";
+import Coin from "./Coin.png";
 
 /* Basic CSS for apps built with Ionic */
 import "@ionic/react/css/normalize.css";
@@ -29,9 +30,17 @@ class Leaders extends React.Component {
       <div className="leaders">
         <h1>Список лидеров</h1>
         {leaders.map((el, i) => (
-          <p id="list">
-            {i + 1}: {el} - {points[i]} point(s)
-          </p>
+          <div id="list">
+            <div id="num">
+              {i < 10 ? 0 : null}
+              {i + 1}
+            </div>{" "}
+            <div id="name">{el}</div>
+            <div>
+              <img src={Coin} width="20px" height="20px" />
+              {points[i]} coin(s)
+            </div>
+          </div>
         ))}
       </div>
     );
