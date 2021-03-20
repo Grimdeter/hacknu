@@ -24,43 +24,30 @@ class Leaders extends React.Component {
     const res = await fetch(
       this.props.location.state ? "/LeaderBoard/team" : "/LeaderBoard/personal"
     );
-    console.log(await res.json());
+    this.setState({ leaders: await res.json() });
   }
 
   render() {
-    const { leaders, teams } = this.state;
+    const { leaders } = this.state;
     let isTeams;
-    if (this.props.location.state) isTeams = this.props.location.state;
+    if (this.props.location.state) isTeams = this.props.location.state.isTeams;
+
     return (
       <div className="leaders">
         <h1>Список лучших {isTeams ? "команд" : "игроков"}</h1>
-        {isTeams
-          ? teams.map((el, i) => (
-              <div id="list" key={i}>
-                <div id="num">
-                  {i < 10 ? 0 : null}
-                  {i + 1}
-                </div>{" "}
-                <div id="name">{el}</div>
-                <div>
-                  <img src={Coin} width="20px" height="20px" />
-                  {} coin(s)
-                </div>
-              </div>
-            ))
-          : leaders.map((el, i) => (
-              <div id="list" key={i}>
-                <div id="num">
-                  {i < 10 ? 0 : null}
-                  {i + 1}
-                </div>{" "}
-                <div id="name">{el.name}</div>
-                <div>
-                  <img src={Coin} width="20px" height="20px" />
-                  {el.totalScore} coin(s)
-                </div>
-              </div>
-            ))}
+        {leaders.map((el, i) => (
+          <div id="list" key={i}>
+            <div id="num">
+              {i < 10 ? 0 : null}
+              {i + 1}
+            </div>{" "}
+            <div id="name">{el.name}</div>
+            <div>
+              <img src={Coin} width="20px" height="20px" />
+              {el.totalScore} coin(s)
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
