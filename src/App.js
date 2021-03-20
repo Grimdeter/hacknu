@@ -9,8 +9,11 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/" exact component={Main} />
-          <Route path="/leaders" component={Leaders} />
-          <Route path="/game" component={Game}/>
+          <Route path="/leaders" component={Leaders} />{" "}
+          <Route
+            path="/game"
+            render={(props) => <Game {...props} isGame={true} />}
+          />
         </Switch>
       </Router>
     </IonApp>
