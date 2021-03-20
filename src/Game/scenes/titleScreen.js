@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import aituBridge from "@btsd/aitu-bridge";
+import axios from "axios";
 
 export default class titleScreen extends Phaser.Scene {
   constructor() {
@@ -34,10 +36,32 @@ export default class titleScreen extends Phaser.Scene {
   }
 
   create() {
-    // this.sound.play("music", { repeat: true, volume: 0.05 });
+    // this.getPhone()
+    // this.getName()
+    this.dataName = {name:'Joseph'}
+    this.dataPhone = {phone: "+77476251957"}
+    setTimeout(() => {
+      axios.post(`https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/session/getorcreate`, {"name": this.dataName.name, "phone": this.dataPhone.phone}).then((response)=> {
+        console.log(response)
+        this.sessionNum = response.data
+        this.scene.run('mainScene', {phone: this.dataPhone.phone, name:this.dataName.name, sessionNum: this.sessionNum}) 
+  }).catch((error) => {
+        console.log(error)
+      })
+  }, 300);
+    console.log(`aaaaaaaaaaaaaaaaaaaa`)
+  }
 
-      this.scene.run('mainScene') 
-      console.log(`aaaaaaaaaaaaaaaaaaaa`)
+  async getPhone() {
+    try {
+      this.dataPhone = await aituBridge.getPhone();
+    } catch (error) {}
+  }
+
+  async getName() {
+    try {
+      this.dataName = await aituBridge.getMe();
+    } catch (error) {}
   }
 
   update() {

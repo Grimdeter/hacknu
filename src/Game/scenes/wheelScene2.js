@@ -10,7 +10,9 @@ export default class wheelScene extends Phaser.Scene {
 
   init(data) {
     this.score = data.score;
-    this.phone = data.dataPhone;
+    this.phone = data.phone;
+    this.name = data.name
+    this.sessionNum = data.sessionNum
   }
 
   preload() { }
@@ -24,7 +26,8 @@ export default class wheelScene extends Phaser.Scene {
 
 
     // axios.defaults.baseURL = "https://aitu.digital-tm.kz/api/";
-    axios.post(`https://aitu.digital-tm.kz/api/Session/Report/`, {"phoneNum": `${this.phone}`, "score": this.score})
+    console.log(`${this.phone}`)
+    axios.post(`https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/Session/Report/`, {"phoneNum": this.phone, "score": this.score})
     .then((response) => {
       console.log(response);
     })
