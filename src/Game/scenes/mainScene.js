@@ -63,6 +63,7 @@ export default class mainScene extends Phaser.Scene {
       this.obstArray.forEach(element => {
         element.y += 100;
       })
+      console.log(`mouse x: ${this.input.x}`)
     })
 
     this.obstSideLeft = 0;
@@ -79,10 +80,7 @@ export default class mainScene extends Phaser.Scene {
 
     this.input.on('pointerdown', () => 
     {
-      // this.updateScore()
-      // this.obstArray.forEach(element => {
-      //   element.y += 120;
-      // })
+      console.log(`mouse x: ${this.input.x}`)
     })
     this.addInterface()
     
