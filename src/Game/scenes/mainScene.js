@@ -29,6 +29,7 @@ export default class mainScene extends Phaser.Scene {
     this.obstArray = []
 
     this.pc = this.add.sprite(window.screen.width/2 - 50, window.screen.height - 150, 'pc0').setOrigin(0.5, 0.5).setScale(3,3)
+    this.tree = this.add.tileSprite(window.screen.width/2, 0, 100, window.screen.height*4, 'tree')
     this.ground = this.add.tileSprite(0, window.screen.height - 60, 5000, 40, 'ground')
     this.ground2 = this.add.tileSprite(0, window.screen.height - 20, 5000, 40, 'ground2')
 
@@ -36,7 +37,6 @@ export default class mainScene extends Phaser.Scene {
 
     this.pc.body.setSize(30, 15, true);
 
-    this.tree = this.add.tileSprite(window.screen.width/2, 0, 100, window.screen.height*4, 'tree')
 
     this.groupBranch = this.physics.add.group({
       defaultKey: "branch",
@@ -70,10 +70,10 @@ export default class mainScene extends Phaser.Scene {
       }
     })
 
-    this.zoneGraphics.strokeRect(this.leftZone.x, this.leftZone.y, this.leftZone.width, this.leftZone.height)
+    // this.zoneGraphics.strokeRect(this.leftZone.x, this.leftZone.y, this.leftZone.width, this.leftZone.height)
 
     this.zoneGraphics.lineStyle(4, 0xff0000)
-    this.zoneGraphics.strokeRect(200, 0, 200, 700)
+    // this.zoneGraphics.strokeRect(200, 0, 200, 700)
 
     this.rightZone = this.add.zone(window.screen.width, 0, window.screen.width, window.screen.height*4).setInteractive()
     this.rightZone.on('pointerup', () => {
@@ -228,22 +228,10 @@ export default class mainScene extends Phaser.Scene {
 
     this.tree.tilePositionY += 50
 
-    // if (this.obstCount > 6) {
-    //   this.obstArray.push(
-    //     this.groupBranch
-    //       .create(435, 30)
-    //       .setRotation(1.57)
-    //       .setSize(15, 15, true)
-    //       .setTint(this.obstColor)
-    //   ); // right
-    //   this.obstArray.push(
-    //     this.groupBranch
-    //       .create(15, 30)
-    //       .setRotation(-1.57)
-    //       .setSize(15, 15, true)
-    //       .setTint(this.obstColor)
-    //   ); // left
-    // }
+    if (this.obstArray[0].y > window.screen.height-150) {
+      this.obstArray.shift().destroy();
+    }
+
   }
 
   updateScore() {

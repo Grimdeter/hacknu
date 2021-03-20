@@ -36,35 +36,42 @@ export default class titleScreen extends Phaser.Scene {
   }
 
   create() {
-    // this.getPhone()
-    // this.getName()
+    this.readyPhone = false
+    this.readyName = false
+    this.postExecuted = false
+    this.getPhone()
+    this.getName()
     this.dataName = {name:'Joseph'}
     this.dataPhone = {phone: "+77476251957"}
-    setTimeout(() => {
-      axios.post(`https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/session/getorcreate`, {"name": this.dataName.name, "phone": this.dataPhone.phone}).then((response)=> {
-        console.log(response)
-        this.sessionNum = response.data
-        this.scene.run('mainScene', {phone: this.dataPhone.phone, name:this.dataName.name, sessionNum: this.sessionNum}) 
-  }).catch((error) => {
-        console.log(error)
-      })
-  }, 300);
+
     console.log(`aaaaaaaaaaaaaaaaaaaa`)
   }
 
   async getPhone() {
     try {
       this.dataPhone = await aituBridge.getPhone();
+      this.readyPhone = true
     } catch (error) {}
   }
 
   async getName() {
     try {
       this.dataName = await aituBridge.getMe();
+      this.readyName = true
     } catch (error) {}
   }
 
   update() {
-
+    if( this.readyName === true && this.readyPhone === true && this.postExecuted === false)
+    {
+      axios.post(`https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/session/getorcreate`, {"name": this.dataName.name, "phoneNum": this.dataPhone.phone}).then((response)=> {
+        console.log(response)
+        this.sessionNum = response.data
+        this.scene.run('mainScene', {phone: this.dataPhone.phone, name:this.dataName.name, sessionNum: this.sessionNum}) 
+        }).catch((error) => {
+          console.log(error)
+        })
+      this.postExecuted = true
+    }
   }
 }
