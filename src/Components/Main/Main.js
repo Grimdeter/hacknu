@@ -20,10 +20,8 @@ class Main extends React.Component {
       name: "",
       coins: 0,
     };
-  }
 
-  componentDidMount() {
-    
+    this.getCoins = this.getCoins.bind(this);
   }
 
   async getName() {
@@ -33,8 +31,28 @@ class Main extends React.Component {
     } catch (error) {}
   }
 
-  componentDidMount() {
+  async getCoins() {
     this.getName();
+    const res = await fetch("/Player/Coins/77476859507");
+    this.setState({ coins: await res.json() });
+  }
+
+  componentDidMount() {
+    this.getCoins();
+  }
+
+  async onSend() {
+    const res = await fetch("/Player/transferCoins", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        phoneNum: "+77476859507",
+      }),
+    });
+    console.log(await res.json());
+    this.getCoins();
   }
 
   render() {
@@ -62,7 +80,9 @@ class Main extends React.Component {
               У вас накопилось {coins} монет. Перевести в кошелек AituPay в
               качестве бонусов?
             </p>
-            <IonButton color="success">Перевести!</IonButton>
+            <IonButton color="success" onClick={this.onSend}>
+              Перевести!
+            </IonButton>
           </div>
           <Link to="/form">
             <IonButton color="success" id="play-team">
