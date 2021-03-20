@@ -10,6 +10,10 @@ const config = {
   parent: "phaser",
 	width: window.screen.width,
 	height: window.screen.height,
+  scale: {
+              mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH
+  },
   physics: {
     default: "arcade",
     arcade: {
