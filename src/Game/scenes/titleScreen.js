@@ -50,7 +50,6 @@ export default class titleScreen extends Phaser.Scene {
   async getPhone() {
     try {
       this.dataPhone = await aituBridge.getPhone();
-      this.add.text(0, 400, this.dataPhone.phone)
       this.readyPhone = true
     } catch (error) {}
   }
@@ -58,7 +57,6 @@ export default class titleScreen extends Phaser.Scene {
   async getName() {
     try {
       this.dataName = await aituBridge.getMe();
-      this.add.text(0, 200, this.dataName.name)
       this.readyName = true
     } catch (error) {}
   }
