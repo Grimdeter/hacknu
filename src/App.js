@@ -3,6 +3,7 @@ import Leaders from "./Components/Leaders/Leaders";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Game from "./Components/game";
 import Form from "./Components/Team-form/Team-form";
+import Shop from "./Components/Shop/Shop";
 import { IonApp } from "@ionic/react";
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
             render={(props) => <Game {...props} isGame={true} />}
           />
           <Route path="/form" component={Form} />
+          <Route path="/shop" component={Shop} />
         </Switch>
       </Router>
     </IonApp>
