@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { Link } from "react-router-dom";
 
 export default class wheelScene extends Phaser.Scene {
   constructor() {
@@ -24,6 +25,14 @@ export default class wheelScene extends Phaser.Scene {
     {
       this.scene.stop()
       this.scene.run('mainScene')
+    })
+    this.backBtn = this.add.text(200, 600, "Главная страница").setInteractive().setOrigin(0.5, 0.5)
+    this.backBtn.on('pointerdown', () =>
+    {
+      this.sys.game.destroy(true);
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 500);
     })
   }
 

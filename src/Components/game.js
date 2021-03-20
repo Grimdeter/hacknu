@@ -18,15 +18,19 @@ const config = {
   },
   scene: [titleScreen, mainScene, pauseScreen, wheelScene2],
 };
-let mounted = false
-let game;
+
+let game = null;
 export default class App extends React.Component {
+  data(){
+    return {
+      game: null,
+    };
+  }
   render() {
     if (this.props.isGame) {
-      if (mounted === false)
+      if (game === null)
       {
         game = new Phaser.Game(config);
-        mounted = true
       }
     }
     return <div style={{ textAlign: "center" }}></div>;
