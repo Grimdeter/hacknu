@@ -21,6 +21,9 @@ const config = {
 
 let game;
 export default class App extends React.Component {
+  componentWillUnmount() {
+    game.destroy(true);
+  }
   render() {
     if (this.props.isGame) {
       if (game === undefined)

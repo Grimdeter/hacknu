@@ -22,6 +22,10 @@ class Main extends React.Component {
     };
   }
 
+  componentDidMount() {
+    
+  }
+
   async getName() {
     try {
       const data = await aituBridge.getMe();
@@ -41,12 +45,17 @@ class Main extends React.Component {
           <h1>Woodsman</h1>
           {name ? <p>Привет, {name}</p> : null}
           <Link to="/leaders">
-            <IonButton color="success">Список лидеров</IonButton>
+            <IonButton color="success">Лучшие игроки</IonButton>
           </Link>
-          <Link to="/game">
-            <IonButton expand="block" color="success" id="play">
-              Играть
-            </IonButton>
+          <Link
+            to={{
+              pathname: "/leaders",
+              state: {
+                isTeams: true,
+              },
+            }}
+          >
+            <IonButton color="success">Лучшие команды</IonButton>
           </Link>
           <div id="bonus">
             <p>
@@ -55,6 +64,28 @@ class Main extends React.Component {
             </p>
             <IonButton color="success">Перевести!</IonButton>
           </div>
+          <Link to="/form">
+            <IonButton color="success" id="play-team">
+              Создать команду
+            </IonButton>
+          </Link>
+          <Link
+            to={{
+              pathname: "/form",
+              state: {
+                isGo: true,
+              },
+            }}
+          >
+            <IonButton color="success" id="play-team">
+              Войти в команду
+            </IonButton>
+          </Link>
+          <Link to="/game">
+            <IonButton expand="block" color="success" id="play">
+              ИГРАТЬ ОДНОМУ
+            </IonButton>
+          </Link>
         </div>
       </IonContent>
     );
