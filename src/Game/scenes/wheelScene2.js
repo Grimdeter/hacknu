@@ -24,6 +24,7 @@ export default class wheelScene extends Phaser.Scene {
     this.restartBtn.on('pointerdown', () =>
     {
       this.scene.stop()
+      this.sound.stopAll()
       this.scene.run('mainScene')
     })
     this.backBtn = this.add.text(200, 600, "Главная страница").setInteractive().setOrigin(0.5, 0.5)

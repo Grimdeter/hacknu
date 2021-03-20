@@ -13,24 +13,20 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: true,
+      debug: false,
     },
   },
   scene: [titleScreen, mainScene, pauseScreen, wheelScene2],
 };
 
-let game = null;
+let game;
 export default class App extends React.Component {
-  data(){
-    return {
-      game: null,
-    };
-  }
   render() {
     if (this.props.isGame) {
-      if (game === null)
+      if (game === undefined)
       {
         game = new Phaser.Game(config);
+        console.log(game)
       }
     }
     return <div style={{ textAlign: "center" }}></div>;

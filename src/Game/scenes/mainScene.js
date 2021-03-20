@@ -10,8 +10,11 @@ export default class mainScene extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.fallSpeed = 50
+    this.obstHeight = 50
+    console.log(`main!`)
     this.sky = this.add.tileSprite(0,0,800, 1250, 'sky')
-    this.sound.play("music", { repeat: true, volume: 0.05 });
+    // this.sound.play("music", { repeat: true, volume: 0.05 });
 
     this.score = 0
     window.myScene = this;
@@ -32,21 +35,28 @@ export default class mainScene extends Phaser.Scene {
       allowGravity: false
     });
 
-    this.input.on('pointerdown', () => 
-    {
-    })
-
+    this.leftExecuted = false
+    this.rightExecuted = false
     this.zoneGraphics = this.add.graphics()
     this.zoneGraphics.lineStyle(4, 0x555555)
     this.leftZone = this.add.zone(0, 0, 400, 1800).setInteractive()
-    this.leftZone.on('pointerdown', () => {
-      console.log(`aaaaaaaaaaaaaaa`)
-      this.flipToLeft()
-      this.addObst()
-      this.updateScore()
-      this.obstArray.forEach(element => {
-        element.y += 100;
-      })
+    this.leftZone.on('pointerup', () => {
+      if (this.leftExecuted === false)
+      {
+        console.log(`left zone top`)
+        this.flipToLeft()
+        this.addObst()
+        this.updateScore()
+        this.obstArray.forEach(element => {
+          element.y += this.fallSpeed;
+        })
+        console.log(`left zone bot`)
+        this.leftExecuted = true
+        setTimeout(() => {
+          this.rightExecuted = false
+          this.leftExecuted = false
+        }, 100);
+      }
     })
 
     this.zoneGraphics.strokeRect(this.leftZone.x, this.leftZone.y, this.leftZone.width, this.leftZone.height)
@@ -55,16 +65,24 @@ export default class mainScene extends Phaser.Scene {
     this.zoneGraphics.strokeRect(200, 0, 200, 700)
 
     this.rightZone = this.add.zone(400, 0, 400, 1800).setInteractive()
-    this.rightZone.on('pointerdown', () => {
-      console.log(`bbbbbbbbbbb`)
-      this.addObst()
-      this.flipToRight()
-      this.updateScore()
-      this.obstArray.forEach(element => {
-        element.y += 100;
-      })
-      console.log(`mouse x: ${this.input.x}`)
-    })
+    this.rightZone.on('pointerup', () => {
+      if (this.rightExecuted === false)
+      {
+        console.log(`right top`)
+        this.addObst()
+        this.flipToRight()
+        this.updateScore()
+        this.obstArray.forEach(element => {
+          element.y += this.fallSpeed;
+        })
+        this.rightExecuted = true
+        console.log(`right bot`)
+        setTimeout(() => {
+          this.rightExecuted = false
+          this.leftExecuted = false
+        }, 100);
+      }
+    }, this)
 
     this.obstSideLeft = 0;
     this.obstSideRight = 0;
@@ -78,10 +96,6 @@ export default class mainScene extends Phaser.Scene {
     this.allowClick = true;
     this.died = false;
 
-    this.input.on('pointerdown', () => 
-    {
-      console.log(`mouse x: ${this.input.x}`)
-    })
     this.addInterface()
     
     this.anims.create({
@@ -112,7 +126,8 @@ export default class mainScene extends Phaser.Scene {
       // visible
       showOnStart: false,
       hideOnComplete: false
-  })
+    })
+
     this.ground = this.add.tileSprite(0, 640, 5000, 40, 'ground')
     this.ground2 = this.add.tileSprite(0, 680, 5000, 40, 'ground2')
   }
@@ -146,8 +161,6 @@ export default class mainScene extends Phaser.Scene {
       .setOrigin(0.5, 0.5)
 
     this.pauseBtn.on(`pointerdown`, () => {
-      this.physics.world.gravity.x = -this.physics.world.gravity.x;
-      this.changePC();
       this.scene.sleep();
       this.scene.launch(`pauseScreen`, {
         score: this.score,
@@ -158,46 +171,46 @@ export default class mainScene extends Phaser.Scene {
   }
 
   addObst() {
+    console.log(`adding obst`)
+    
     this.side = Math.floor(Math.random() * Math.floor(2));
     if (this.obstAllowAdd === true) {
-      if (this.side == 1) {
+      if (this.side === 1) {
         this.obstSideLeft++;
         this.obstSideRight = 0;
-        if (this.obstSideLeft == 3) {
+        if (this.obstSideLeft === 3) {
           this.obstArray.push(
             this.groupBranch
-              .create(275, 30)
-              .setSize(15, 15, true)
-              .setSize(80, 80, true)
+              .create(275, this.obstHeight)
+              // .setSize(80, 50, true)
           ); // right
           // this.obstArray.push(this.groupBranch.create(375, 80).setScale(0.07, 0.07).setRotation(-1.57).setSize(800,800,true)) // right
         } else {
           this.obstArray.push(
             this.groupBranch
-              .create(145, 30)
-              .setSize(15, 15, true)
-              .setSize(80, 80, true)
+              .create(145, this.obstHeight)
+              // .setSize(15, 15, true)
+              // .setSize(80, 50, true)
           ); // left
           // this.obstArray.push(this.groupBranch.create(75, 80).setScale(0.07, 0.07).setRotation(1.57).setSize(800,800,true)) // left
         }
       } else {
         this.obstSideRight++;
         this.obstSideLeft = 0;
-        if (this.obstSideRight == 3) {
+        if (this.obstSideRight === 3) {
           this.obstArray.push(
             this.groupBranch
-              .create(165, 30)
-              .setSize(15, 15, true)
-              .setSize(80, 80, true)
+              .create(145, this.obstHeight)
+              // .setSize(15, 15, true)
+              // .setSize(80, 50, true)
           ); // left
           // this.obstArray.push(this.groupBranch.create(125, 80).setScale(0.07, 0.07).setRotation(1.57)) // left
           // this.obstArray.push(this.groupBranch.create(75, 80).setScale(0.07, 0.07).setRotation(1.57).setSize(800,800,true)) // left
         } else {
           this.obstArray.push(
             this.groupBranch
-              .create(275, 30)
-              .setSize(15, 15, true)
-              .setSize(80, 80, true)
+              .create(275, this.obstHeight)
+              // .setSize(80, 50, true)
           ); // right
           // this.obstArray.push(this.groupBranch.create(375, 80).setScale(0.07, 0.07).setRotation(-1.57).setSize(800,800,true)) // right
         }
@@ -243,7 +256,41 @@ export default class mainScene extends Phaser.Scene {
     this.pc.setFlipX(false)
   }
 
+  getTime() {
+    //make a new date object
+    let d = new Date();
+    //return the number of milliseconds since 1 January 1970 00:00:00.
+    return d.getTime();
+  }
+
+  onDown() {
+    //if the firstClickTime is 0 then
+    //this we record the time and leave the function
+    if (this.firstClickTime === 0) {
+        this.firstClickTime = this.getTime();
+        console.log(`1st click time ${this.firstClickTime}`)
+        return;
+    }
+    //
+    //get the elapsed time between clicks
+    //
+    let elapsed = this.getTime() - this.firstClickTime;
+    //
+    //if the time between clicks is less than 350 milliseconds
+    //it is a doulble click
+    //
+    if (elapsed < 350) {
+        console.log("double click");
+    }
+    //
+    //reset the firstClickTime
+    //
+    this.firstClickTime = 0;
+  }
+
   update() {
+    // this.leftExecuted = false
+    // this.rightExecuted = false
     this.physics.world.collide(this.pc, this.groupBranch, this.die, null, this)
   }
 
