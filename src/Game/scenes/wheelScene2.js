@@ -52,8 +52,6 @@ export default class wheelScene extends Phaser.Scene {
     })
   }
 
-
-
   spin() {
     
   }

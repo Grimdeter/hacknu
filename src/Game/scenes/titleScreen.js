@@ -16,11 +16,11 @@ export default class titleScreen extends Phaser.Scene {
   preload() {
     this.load.image(`bg`, 'gameAssets/bgMonochrome.png');
     this.load.image("button", "gameAssets/button.png");
-    this.load.audio(`click`, "gameAssets/click.mp3");
-    this.load.audio(`music`, "gameAssets/stay-around-free-dl.ogg");
+    // this.load.audio(`click`, "gameAssets/click.mp3");
+    // this.load.audio(`music`, "gameAssets/stay-around-free-dl.ogg");
     this.load.image("border", "gameAssets/border.png");
-    this.load.image("soundOn", "gameAssets/soundOn.png");
-    this.load.image("soundOff", "gameAssets/soundOff.png");
+    // this.load.image("soundOn", "gameAssets/soundOn.png");
+    // this.load.image("soundOff", "gameAssets/soundOff.png");
     this.load.image("pause", "gameAssets/pause.png");
     this.load.image("pc0", "gameAssets/pc0.png");
     this.load.image("pc1", "gameAssets/pc1.png");

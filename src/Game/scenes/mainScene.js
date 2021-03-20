@@ -18,9 +18,8 @@ export default class mainScene extends Phaser.Scene {
   create() {
     this.scale.setZoom(0.9)
 
-    this.fallSpeed = window.screen.height/14 + 5
+    this.fallSpeed = window.screen.height/14 + 7
     this.obstHeight = window.screen.height/14
-    console.log(`main!`)
     this.sky = this.add.tileSprite(0,0,8000, 2250, 'sky')
     // this.sound.play("music", { repeat: true, volume: 0.05 });
 
