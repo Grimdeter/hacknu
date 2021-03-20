@@ -22,7 +22,9 @@ class Leaders extends React.Component {
 
   async componentDidMount() {
     const res = await fetch(
-      this.props.location.state ? "/LeaderBoard/team" : "/LeaderBoard/personal"
+      this.props.location.state
+        ? "https://aitu.digital-tm.kz/api/LeaderBoard/team"
+        : "https://aitu.digital-tm.kz/api/LeaderBoard/personal"
     );
     this.setState({ leaders: await res.json() });
   }

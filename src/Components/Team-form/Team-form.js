@@ -4,7 +4,6 @@ import "@ionic/react/css/core.css";
 import { IonContent, IonItem, IonInput, IonButton } from "@ionic/react";
 import "./Team-form.css";
 import { Link } from "react-router-dom";
-import aituBridge from "@btsd/aitu-bridge";
 
 /* Basic CSS for apps built with Ionic */
 import "@ionic/react/css/normalize.css";
@@ -17,18 +16,15 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = { text: "" };
-
-    this.onSubmit = this.onSubmit.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
   }
 
-  async componentWillUnmount() {}
-
-  async onSubmit() {
+  async componentWillUnmount() {
     const { text } = this.state;
     //const data = await aituBridge.getPhone();
     const res = await fetch(
-      this.props.location.state ? "/team/join" : "/team/create",
+      this.props.location.state
+        ? "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/team/join"
+        : "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/team/create",
       {
         method: "POST",
         headers: {
@@ -40,7 +36,7 @@ class Form extends React.Component {
         }),
       }
     );
-    console.log(await res.json());
+    console.log(res);
   }
 
   render() {
@@ -60,7 +56,11 @@ class Form extends React.Component {
               className="button"
               onClick={this.onSubmit}
             >
-              {isGo ? "Войти в команду" : "Создать команду"}
+              {isGo ? (
+                <Link to="/game">Войти в команду</Link>
+              ) : (
+                <Link to="/game">Создать команду</Link>
+              )}
             </IonButton>
           </div>
         </IonItem>

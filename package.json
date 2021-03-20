@@ -68,6 +68,5 @@
     "@capacitor/cli": "2.4.6",
     "webpack-cli": "^4.5.0"
   },
-  "description": "An Ionic project",
-  "proxy": "https://aitu.digital-tm.kz/api"
+  "description": "An Ionic project"
 }

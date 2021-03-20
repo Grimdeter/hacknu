@@ -22,36 +22,45 @@ class Main extends React.Component {
     };
 
     this.getCoins = this.getCoins.bind(this);
+    this.onSend = this.onSend.bind(this);
+    this.getName = this.getName.bind(this);
   }
 
   async getName() {
     try {
       const data = await aituBridge.getMe();
       this.setState({ name: data.name });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getCoins() {
-    this.getName();
-    const res = await fetch("/Player/Coins/77476859507");
+    const res = await fetch(
+      "https://aitu.digital-tm.kz/api/Player/Coins/77476859507"
+    );
     this.setState({ coins: await res.json() });
   }
 
   componentDidMount() {
+    this.getName();
     this.getCoins();
   }
 
   async onSend() {
-    const res = await fetch("/Player/transferCoins", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        phoneNum: "+77476859507",
-      }),
-    });
-    console.log(await res.json());
+    const res = await fetch(
+      "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/Player/transferCoins",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          phoneNumBER: "+77476859507",
+        }),
+      }
+    );
+    console.log(res);
     this.getCoins();
   }
 
