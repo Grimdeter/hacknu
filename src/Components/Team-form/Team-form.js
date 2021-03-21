@@ -29,7 +29,7 @@ class Form extends React.Component {
       const res = await fetch(
         this.props.location.state
           ? "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/team/join"
-          : "https://aitu.digital-tm.kz/api/team/create",
+          : "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/team/create",
         {
           method: "POST",
           headers: {
