@@ -40,7 +40,7 @@ class Leaders extends React.Component {
         {leaders.map((el, i) => (
           <div id="list" key={i}>
             <div id="num">
-              {i < 10 ? 0 : null}
+              {i < 9 ? 0 : null}
               {i + 1}
             </div>{" "}
             <div id="name">{el.name}</div>
