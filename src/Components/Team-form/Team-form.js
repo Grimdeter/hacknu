@@ -3,7 +3,8 @@ import React from "react";
 import "@ionic/react/css/core.css";
 import { IonContent, IonItem, IonInput, IonButton } from "@ionic/react";
 import "./Team-form.css";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import aituBridge from "@btsd/aitu-bridge";
 
 /* Basic CSS for apps built with Ionic */
 import "@ionic/react/css/normalize.css";
@@ -15,32 +16,41 @@ import "../../theme/variables.css";
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: "" };
+    this.state = { text: "", redirect: false };
+
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async componentWillUnmount() {
+  async onSubmit() {
     const { text } = this.state;
-    //const data = await aituBridge.getPhone();
-    const res = await fetch(
-      this.props.location.state
-        ? "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/team/join"
-        : "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/team/create",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          teamName: text,
-          phoneNum: "+77476859507",
-        }),
-      }
-    );
-    console.log(res);
+    const data = await aituBridge.getPhone();
+    const phone = data.phone.substring(1);
+    try {
+      const res = await fetch(
+        this.props.location.state
+          ? "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/team/join"
+          : "https://aitu.digital-tm.kz/api/team/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            teamName: text,
+            phoneNum: phone,
+          }),
+        }
+      );
+      console.log(res, await res.text());
+      this.setState({ redirect: true });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
-    const { text } = this.state;
+    const { text, redirect } = this.state;
+    if (redirect) return <Redirect to="/game" />;
     let isGo;
     if (this.props.location.state) isGo = this.props.location.state;
     return (
@@ -56,11 +66,7 @@ class Form extends React.Component {
               className="button"
               onClick={this.onSubmit}
             >
-              {isGo ? (
-                <Link to="/game">Войти в команду</Link>
-              ) : (
-                <Link to="/game">Создать команду</Link>
-              )}
+              {isGo ? "Создать команду" : "Создать команду"}
             </IonButton>
           </div>
         </IonItem>

@@ -1,6 +1,6 @@
 import React from "react";
 import aituBridge from "@btsd/aitu-bridge";
-import { IonApp, IonContent, IonButton } from "@ionic/react";
+import { IonContent, IonButton, IonAlert } from "@ionic/react";
 import { Link } from "react-router-dom";
 import "./Main.css";
 /* Core CSS required for Ionic components to work properly */
@@ -19,10 +19,10 @@ class Main extends React.Component {
     this.state = {
       name: "",
       coins: 0,
+      alert: false,
     };
 
     this.getCoins = this.getCoins.bind(this);
-    this.onSend = this.onSend.bind(this);
     this.getName = this.getName.bind(this);
   }
 
@@ -47,25 +47,8 @@ class Main extends React.Component {
     this.getCoins();
   }
 
-  async onSend() {
-    const res = await fetch(
-      "https://cors-any-kz.herokuapp.com/https://aitu.digital-tm.kz/api/Player/transferCoins",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          phoneNumBER: "+77476859507",
-        }),
-      }
-    );
-    console.log(res);
-    this.getCoins();
-  }
-
   render() {
-    const { name, coins } = this.state;
+    const { name, coins, alert } = this.state;
     return (
       <IonContent>
         <div className="main">
@@ -89,9 +72,21 @@ class Main extends React.Component {
               У вас накопилось {coins} монет. Перевести в кошелек AituPay в
               качестве бонусов?
             </p>
-            <IonButton color="success" onClick={this.onSend}>
+            <IonButton
+              color="success"
+              onClick={() => this.setState({ alert: true })}
+            >
               Перевести!
             </IonButton>
+            <IonAlert
+              isOpen={alert}
+              onDidDismiss={() => this.setState({ alert: false })}
+              cssClass="my-custom-class"
+              header={"Скоро"}
+              subHeader={""}
+              message={"Это будет доступно после соединения с кошельком"}
+              buttons={["OK"]}
+            ></IonAlert>
           </div>
           <Link to="/form">
             <IonButton color="success" id="play-team">
