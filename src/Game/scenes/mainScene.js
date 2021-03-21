@@ -16,12 +16,14 @@ export default class mainScene extends Phaser.Scene {
   preload() {}
 
   create() {
+    console.log(`start main scene`)
     this.scale.setZoom(0.9)
 
-    this.fallSpeed = window.screen.height/14 + 7
-    this.obstHeight = window.screen.height/14
+    this.fallSpeed = 60
+    this.obstHeight = -(window.screen.height - 150) + (window.screen.height - 150) - 5
     this.sky = this.add.tileSprite(0,0,8000, 2250, 'sky')
     // this.sound.play("music", { repeat: true, volume: 0.05 });
+    console.log(`start main scene2`)
 
     this.score = 0
     window.myScene = this;
@@ -53,14 +55,12 @@ export default class mainScene extends Phaser.Scene {
     this.leftZone.on('pointerup', () => {
       if (this.leftExecuted === false)
       {
-        console.log(`left zone top`)
         this.flipToLeft()
         this.addObst()
         this.updateScore()
         this.obstArray.forEach(element => {
           element.y += this.fallSpeed;
         })
-        console.log(`left zone bot`)
         this.leftExecuted = true
         setTimeout(() => {
           this.rightExecuted = false
@@ -73,12 +73,12 @@ export default class mainScene extends Phaser.Scene {
 
     this.zoneGraphics.lineStyle(4, 0xff0000)
     // this.zoneGraphics.strokeRect(200, 0, 200, 700)
+    console.log(`start main scene3`)
 
     this.rightZone = this.add.zone(window.screen.width, 0, window.screen.width, window.screen.height*4).setInteractive()
     this.rightZone.on('pointerup', () => {
       if (this.rightExecuted === false)
       {
-        console.log(`right top`)
         this.addObst()
         this.flipToRight()
         this.updateScore()
@@ -86,7 +86,6 @@ export default class mainScene extends Phaser.Scene {
           element.y += this.fallSpeed;
         })
         this.rightExecuted = true
-        console.log(`right bot`)
         setTimeout(() => {
           this.rightExecuted = false
           this.leftExecuted = false
@@ -179,8 +178,6 @@ export default class mainScene extends Phaser.Scene {
   }
 
   addObst() {
-    console.log(`adding obst`)
-    
     this.side = Math.floor(Math.random() * Math.floor(2));
     if (this.obstAllowAdd === true) {
       if (this.side === 1) {
