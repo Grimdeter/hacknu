@@ -1,15 +1,10 @@
-# React Boilerplate
+# React + Phaser 3 project for HackNU 2021
 
-React приложение, показывает как использовать библиотеку @btsd/aitu-bridge для управления приложением в Aitu Apps
+Woodsman, is a game about avoiding falling branches by alternating between two sides of a tree. The game also has it is own leaderboard, teams which are integrated using React + Ionic. Integration with AITU apps had been done suing aitu bridge library
 
-## Документация
-
-http://docs.aitu.io/
-
-## Установка
+## Installation
 
 ```bash
 npm install
 npm run start
 ```
-открыть в браузере http://localhost:3000/
